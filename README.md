@@ -60,13 +60,10 @@ Files used:
 
 ### 2. Bechdel Test Dataset
 
-This dataset contains Bechdel test results used to measure female representation in movies.
+This dataset contains Bechdel test results together with additional movie information such as IMDb ratings and vote counts. It was used to measure female representation in movies and to enrich the analysis with audience-based metrics.
 
 Source:  
-https://bechdeltest.com/
-
-Merged dataset source:  
-https://www.kaggle.com/datasets/tomasonjo/imbd-bechdel-test
+https://www.kaggle.com/datasets/nliabzd/movies-imdb-and-bechdel-information
 
 File used:
 

@@ -1,4 +1,3 @@
-
 # Women in Movies: Representation and Success
 
 ## Project Overview
@@ -38,6 +37,40 @@ The dataset contains thousands of movies and includes the following features:
 - `genre3`
 
 These variables allow me to analyze female representation from both financial and audience-based perspectives.
+
+---
+
+## Data Sources
+
+This project uses publicly available datasets:
+
+### 1. TMDB 5000 Movies Dataset
+
+This dataset provides detailed movie information including budget, revenue, cast, and popularity.
+
+Source:  
+https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata
+
+Files used:
+
+- tmdb_5000_movies.csv  
+- tmdb_5000_credits.csv  
+
+---
+
+### 2. Bechdel Test Dataset
+
+This dataset contains Bechdel test results used to measure female representation in movies.
+
+Source:  
+https://bechdeltest.com/
+
+Merged dataset source:  
+https://www.kaggle.com/datasets/tomasonjo/imbd-bechdel-test
+
+File used:
+
+- Bechdel_IMDB_Merge0524.csv
 
 ---
 
@@ -114,6 +147,31 @@ I used the following tools and libraries:
 These tools helped me perform data analysis, visualization, and hypothesis testing.
 
 ---
+## Use of AI Tools
+
+AI tools were used as supportive resources during this project, primarily ChatGPT. These tools assisted in code refinement, methodological improvements, and analytical planning.
+
+AI assistance was used for:
+
+- improving and organizing Python code  
+- debugging and optimizing analysis workflows  
+- identifying additional exploratory data analysis techniques  
+- suggesting hypothesis testing approaches  
+- improving visualization strategies  
+- refining documentation and project structure  
+
+### Example Prompts
+
+Examples of prompts used include:
+
+- "How can I improve this Python code for merging movie datasets?"
+- "What additional EDA techniques can I apply to analyze female representation in movies?"
+- "How can I test whether female directors affect movie success?"
+- "Suggest better visualization methods for comparing female representation."
+
+All final decisions, dataset preparation, analysis implementation, and interpretation of results were conducted by the author. AI tools were used solely as supportive guidance throughout the project.
+
+---
 
 ## Project Goal
 
@@ -121,9 +179,7 @@ The goal of this project is to better understand how gender representation in mo
 
 ---
 
-## Author
+
 
 Sena Kahya  
 DSA 210 — Introduction to Data Science
-
-

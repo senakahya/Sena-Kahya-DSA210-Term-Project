@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Women in Movies: Representation and Success
 
 ## Project Overview
@@ -125,6 +125,5 @@ The goal of this project is to better understand how gender representation in mo
 
 Sena Kahya  
 DSA 210 — Introduction to Data Science
-=======
-# Sena-Kahya-DSA210-Term-Project
->>>>>>> 031393c92324f71be57427e9e5b47f5b660607cf
+
+

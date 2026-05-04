@@ -11,75 +11,61 @@ I specifically explore questions such as:
 - Do movies with more female representation receive higher ratings?
 - Is there a relationship between female representation and audience engagement?
 
-To answer these questions, I use publicly available movie datasets and perform exploratory data analysis and hypothesis testing.
+To answer these questions, I use a cleaned and enriched movie dataset and perform exploratory data analysis, hypothesis testing, and machine learning.
 
 ---
 
 ## Dataset
 
-The dataset contains thousands of movies and includes the following features:
+The main data source for this project is **The Movies Dataset**:
 
-- `title`
-- `year`
-- `budget`
-- `revenue`
-- `vote_average`
-- `vote_count`
-- `popularity`
-- `female_ratio`
-- `female_director`
-- `bechdelRating`
-- `imdbAverageRating`
-- `numVotes`
-- `runtimeMinutes`
-- `genre1`
-- `genre2`
-- `genre3`
+https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset
 
-These variables allow me to analyze female representation from both financial and audience-based perspectives.
+This dataset consists of credits.csv, links.csv, movies_metadata.csv and ratings.csv
 
----
+This public dataset provides movie metadata, cast and crew information, user ratings, genres, release information, and external database identifiers.
 
-## Data Sources
+The dataset was enriched with two additional public sources:
 
-This project uses publicly available datasets:
+- **Movies, IMDb and Bechdel Information**  
+  https://www.kaggle.com/datasets/nliabzd/movies-imdb-and-bechdel-information
 
-### 1. TMDB 5000 Movies Dataset
+- **The Oscar Award, 1927-2025**  
+  https://www.kaggle.com/datasets/unanimad/the-oscar-award
 
-This dataset provides detailed movie information including budget, revenue, cast, and popularity.
+The Bechdel/IMDb dataset was merged by IMDb ID and adds `bechdelRating`, `bechdel_pass`, `imdbAverageRating`, and `numVotes`. The Oscar dataset was merged by movie title and year and adds nomination and win indicators.
 
-Source:  
-https://www.kaggle.com/datasets/tmdb/tmdb-movie-metadata
+After cleaning, merging, and feature engineering, the final dataset used in the analysis is:
 
-Files used:
+- `data/processed/cleaned_movie_dataset.csv`
 
-- tmdb_5000_movies.csv  
-- tmdb_5000_credits.csv  
+This cleaned and enriched dataset contains movie metadata, financial variables, audience-based metrics, award context, and gender representation features from both cast and crew information.
 
----
+Key variables include:
 
-### 2. Bechdel Test Dataset
+- Movie information: `title`, `year`, `release_decade`, `runtime`, `genre1`, `genre2`, `genre3`
+- Financial outcomes: `budget`, `revenue`, `profit`, `roi`, `log_budget`, `log_revenue`
+- Audience outcomes: `vote_average`, `vote_count`, `popularity`, `imdbAverageRating`, `numVotes`, `movielens_avg_rating`
+- Cast representation: `female_ratio_all_cast`, `female_ratio_top3`, `female_ratio_top5`, `female_ratio_top10`, `female_lead`
+- Crew representation: `female_director`, `female_writer`, `female_producer`, `female_editor`, `female_cinematographer`, `female_crew_ratio`
+- Contextual indicators: `bechdelRating`, `bechdel_pass`, `oscar_nomination_count`, `oscar_win_count`
+- Data availability flags: `has_budget_data`, `has_revenue_data`, `has_financial_data`, `has_cast_representation_data`, `has_crew_representation_data`
 
-This dataset contains Bechdel test results together with additional movie information such as IMDb ratings and vote counts. It was used to measure female representation in movies and to enrich the analysis with audience-based metrics.
+For financial analysis, zero values in `budget` and `revenue` are treated as missing values. Profit, ROI, and log-transformed financial variables are calculated only when the required financial data is valid.
 
-Source:  
-https://www.kaggle.com/datasets/nliabzd/movies-imdb-and-bechdel-information
-
-File used:
-
-- Bechdel_IMDB_Merge0524.csv
 
 ---
 
 ## Exploratory Data Analysis (EDA)
 
-I first performed exploratory data analysis to better understand the dataset and identify patterns. During this stage, I:
+I first performed exploratory data analysis to understand the structure of the cleaned dataset and identify the main patterns in gender representation. During this stage, I:
 
 - Checked missing values
 - Examined variable distributions
-- Analyzed female representation across genres
-- Compared female and male directors
-- Visualized relationships between variables
+- Analyzed female representation in cast and crew roles
+- Compared representation patterns across genres and release decades
+- Examined ratings, engagement, and financial outcomes separately
+- Visualized relationships between representation variables and movie outcomes
 
 I created several visualizations including:
 
@@ -87,61 +73,59 @@ I created several visualizations including:
 - Box plots  
 - Scatter plots  
 - Heatmaps  
-- Pairplots  
+- Fitted trend plots  
 
-These visualizations helped me understand trends and patterns before moving to hypothesis testing.
+These visualizations helped identify which relationships were worth testing more formally in the hypothesis testing section.
 
 ---
 
 ## Hypothesis Testing
 
-After completing exploratory analysis, I conducted hypothesis testing to investigate whether female representation and female directors affect movie success.
+After completing exploratory analysis, I conducted hypothesis testing to examine whether gender representation is statistically associated with movie outcomes.
 
-I measured success using multiple indicators:
+I tested outcomes in separate groups instead of combining them into one success score:
 
-- Revenue (financial success)
-- IMDb rating (audience perception)
-- Vote count (audience engagement)
-- Popularity (overall interest)
+- Ratings: TMDB, IMDb, and MovieLens ratings
+- Engagement: popularity, TMDB vote count, and IMDb vote count
+- Financial outcomes: log revenue, profit, and ROI
 
 ### Female Director Analysis
 
-I tested whether female directors affect:
+I tested whether movies with at least one female director differ from movies without a female director in:
 
-- Revenue
-- IMDb rating
-- Vote count
-- Popularity
+- Ratings
+- Engagement
+- Financial outcomes
 
-### Female Representation Analysis
+### Cast and Crew Representation Analysis
 
-I also tested whether female representation affects:
+I also tested whether representation measures are associated with movie outcomes:
 
-- Revenue
-- IMDb rating
-- Vote count
-- Popularity
+- Top-5 female cast share
+- Female crew ratio
+- Female writer and producer status
+- Female lead status
 
-For each hypothesis, I:
+The hypothesis tests include:
 
-- Created visualizations
-- Conducted statistical tests
-- Interpreted the results
+- Welch's t-tests for binary group comparisons
+- Mann-Whitney U tests as robustness checks for skewed outcomes
+- Spearman correlations for representation ratios
+- Chi-square tests for categorical representation variables
 
+Financial tests use only movies with valid financial data, following the cleaning rule that treats zero budget and zero revenue as missing values.
 ---
 
 ## Tools and Libraries
 
-I used the following tools and libraries:
+The analysis was developed in Python using Jupyter Notebook. The main libraries used in the project are:
 
-- Python
-- Pandas
-- NumPy
-- Matplotlib
-- Seaborn
-- SciPy
+- Pandas and NumPy for data cleaning, feature engineering, and data manipulation
+- Matplotlib and Seaborn for data visualization
+- SciPy for statistical hypothesis testing
+- Scikit-learn for machine learning models and evaluation
 
-These tools helped me perform data analysis, visualization, and hypothesis testing.
+Together, these tools supported the full workflow from dataset preparation to EDA, hypothesis testing, and machine learning.
 
 ---
 ## Use of AI Tools
@@ -161,7 +145,7 @@ AI assistance was used for:
 
 Examples of prompts used include:
 
-- "How can I improve this Python code for merging movie datasets?"
+- "How can I improve this Python code for preparing the cleaned movie dataset?"
 - "What additional EDA techniques can I apply to analyze female representation in movies?"
 - "How can I test whether female directors affect movie success?"
 - "Suggest better visualization methods for comparing female representation."
@@ -175,7 +159,6 @@ All final decisions, dataset preparation, analysis implementation, and interpret
 The goal of this project is to better understand how gender representation in movies relates to different measures of success. By analyzing female directors and female representation, I aim to explore whether gender diversity has an impact on movie performance.
 
 ---
-
 
 
 Sena Kahya  

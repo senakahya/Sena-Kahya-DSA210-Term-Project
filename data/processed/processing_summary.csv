@@ -1,0 +1,11 @@
+metric,value
+rows,45346
+movies_with_credits,40318
+movies_with_movielens_ratings,44626
+movies_with_bechdel,7709
+movies_with_oscar_nomination,2867
+movies_with_positive_revenue,7397
+movies_with_positive_budget,8876
+movies_with_complete_financial_data,5375
+movies_with_core_eda_data,38855
+movies_with_imdb_rating_data,7709

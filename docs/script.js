@@ -10,7 +10,7 @@ const representationCharts = {
     badge: "Roles + impact",
     type: "combo",
     takeaway:
-      "Female directors are uncommon, but movies with a female director show higher female presence among top cast members and leads.",
+      "Female creative presence is connected to on-screen visibility: movies with a female director also show higher female cast and lead representation.",
     roles: [
       { label: "Female<br>writer", hoverLabel: "Female writer", value: 6.4 },
       { label: "Female<br>producer", hoverLabel: "Female producer", value: 5.7 },
@@ -42,7 +42,7 @@ const representationCharts = {
     type: "histogram",
     median: 33.3,
     takeaway:
-      "Top-billed casts are often far from gender-balanced; the median movie has about one-third women among the top five cast members.",
+      "The typical movie is not balanced in its central cast; women make up about one-third of the top-billed roles.",
     bins: [
       { label: "0-20%", start: 0, end: 20, center: 10, count: 8958 },
       { label: "20-40%", start: 20, end: 40, center: 30, count: 11770 },
@@ -52,13 +52,13 @@ const representationCharts = {
     ],
   },
   genres: {
-    title: "Representation changes clearly across genres",
+    title: "Female share in top-billed cast by genre",
     note:
-      "Average female share among the top-5 billed cast members by primary genre. The y-axis uses the full 0–100% range.",
+      "Average female share among the five most prominent cast members in each primary genre.",
     badge: "Genre view",
     type: "bar",
     takeaway:
-      "Representation is not evenly distributed across genres; romance, horror, and drama show higher top-cast female share than action and documentary.",
+      "On-screen representation depends strongly on genre, so genre context is important when comparing movie success outcomes.",
     bars: [
       { label: "Romance", value: 44.1 },
       { label: "Horror", value: 40.8 },
@@ -76,7 +76,7 @@ const representationCharts = {
     badge: "Budget context",
     type: "budget",
     takeaway:
-      "The highest-budget group has the lowest female director share and lower top-5 female cast share, while female crew ratio increases modestly.",
+      "Larger production scale does not automatically mean stronger female representation; budget should be treated as context, not as a representation measure.",
     groups: ["Q1 lowest", "Q2", "Q3", "Q4 highest"],
     series: [
       { name: "Female director", values: [4.4, 6.5, 3.7, 2.9], color: "#6f9edc" },
@@ -126,7 +126,7 @@ const successCharts = {
       "Movies are grouped by the female share among the top-5 billed cast members. Y-axes start at zero; dashed lines show full-sample reference values.",
     badge: "Cast",
     takeaway:
-      "Cast representation is compared with rating, engagement, and financial outcomes separately, without turning success into one combined score.",
+      "Higher top-cast female share is associated with slightly lower IMDb ratings, lower IMDb vote volume, and a small decline in log revenue, so cast representation does not show one clear success advantage in these selected outcomes.",
     groups: [
       {
         label: "0-20%",
@@ -190,7 +190,7 @@ const successCharts = {
       "Each panel uses that metric's natural units with the y-axis starting at zero so small gaps are not exaggerated. Dashed lines show full-sample reference values.",
     badge: "Director",
     takeaway:
-      "Female-directed movies show a different success profile: engagement is higher, while ratings and financial outcomes need a more careful interpretation.",
+      "Movies with female directors differ from other movies across ratings, engagement, and revenue, but the pattern is mixed rather than a simple sign of higher or lower success.",
     groups: [
       {
         label: "No female director",
@@ -233,7 +233,7 @@ const successCharts = {
       "Movies are grouped by female crew ratio. Y-axes start at zero; dashed lines show full-sample reference values.",
     badge: "Crew",
     takeaway:
-      "Crew representation is read separately for rating, engagement, and financial outcomes; the trend is strongest for engagement and log revenue.",
+      "Female crew ratio has only a weak relationship with IMDb rating, but it is more clearly connected to IMDb vote volume and log revenue, suggesting a stronger link with audience reach and market performance.",
     groups: [
       {
         label: "0-5%",
@@ -320,7 +320,7 @@ const mlOutcomeResults = {
     baselineScore: 0.799,
     range: [0.758, 0.91],
     result:
-      "Representation-related variables significantly improve popularity prediction, with the full feature set achieving the highest ROC-AUC performance.",
+      "Representation-related variables clearly improve popularity prediction, with the full feature set achieving the highest ROC-AUC performance.",
     scores: {
       "Logistic Regression": [0.799, 0.814, 0.82, 0.845],
       "Random Forest": [0.795, 0.814, 0.818, 0.842],
@@ -423,72 +423,52 @@ function renderRepresentationChart(chartKey) {
       container,
       [
         {
-          x: chart.bins.map((bin) => bin.center),
+          x: chart.bins.map((bin) => bin.label),
           y: chart.bins.map((bin) => bin.count),
           type: "bar",
           name: "Number of movies",
-          width: 18,
           marker: {
-            color: ["#8fb7de", "#7fb8d8", "#71b8c9", "#63b8b8", "#55b7a5"],
-            line: { color: "rgba(31,42,58,0.08)", width: 1 },
+            color: ["#6f9edc", "#6aaed0", "#61b8bd", "#58b3a7", "#4fa78f"],
+            line: { color: "rgba(255,255,255,0.92)", width: 1.5 },
           },
           text: chart.bins.map((bin) => bin.count.toLocaleString()),
-          textposition: "top center",
-          customdata: chart.bins.map((bin) => bin.label),
-          hovertemplate: "Top-5 female cast share: %{customdata}<br>Number of movies: %{y:,}<extra></extra>",
+          textposition: "outside",
+          cliponaxis: false,
+          hovertemplate: "Top-5 female cast share: %{x}<br>Number of movies: %{y:,}<extra></extra>",
         },
       ],
       {
         ...baseLayout,
         title: { text: "" },
-        margin: { t: 58, r: 34, b: 110, l: 84 },
+        paper_bgcolor: "white",
+        plot_bgcolor: "white",
+        margin: { t: 44, r: 36, b: 104, l: 86 },
         xaxis: {
-          title: "Top-5 female cast share (%)",
-          range: [0, 100],
-          tickvals: [0, 20, 40, 60, 80, 100],
-          ticktext: ["0%", "20%", "40%", "60%", "80%", "100%"],
-          ticksuffix: "",
+          title: { text: "Top-5 female cast share group", standoff: 18 },
           automargin: true,
-          gridcolor: "rgba(31,42,58,0.12)",
+          showgrid: false,
           zeroline: false,
         },
         yaxis: {
           title: "Number of movies",
-          range: [0, 13800],
+          range: [0, 13000],
           tickformat: "~s",
-          gridcolor: "rgba(31,42,58,0.12)",
+          gridcolor: "rgba(31,42,58,0.10)",
           zeroline: false,
         },
         showlegend: false,
-        bargap: 0.08,
-        shapes: [
-          {
-            type: "line",
-            xref: "x",
-            yref: "y",
-            x0: chart.median,
-            x1: chart.median,
-            y0: 0,
-            y1: 13220,
-            line: {
-              color: "rgba(66,80,105,0.45)",
-              width: 1.5,
-              dash: "dot",
-            },
-          },
-        ],
+        bargap: 0.28,
         annotations: [
           {
-            x: chart.median,
-            y: 13420,
-            text: `Median = ${chart.median.toFixed(1)}%`,
+            x: 0.5,
+            y: 1.08,
+            xref: "paper",
+            yref: "paper",
+            text: `Median top-5 female cast share: ${chart.median.toFixed(1)}%`,
             showarrow: false,
             xanchor: "center",
             yanchor: "middle",
-            font: { color: "#425069", size: 13 },
-            bgcolor: "rgba(255,255,255,0.72)",
-            bordercolor: "rgba(31,42,58,0.12)",
-            borderpad: 5,
+            font: { color: "#425069", size: 12 },
           },
         ],
       },
@@ -570,18 +550,22 @@ function renderRepresentationChart(chartKey) {
         },
         yaxis: {
           title: "Percent (%)",
-          ticksuffix: "%",
           domain: stackedCombo ? [0.58, 1] : [0, 1],
           range: [0, 100],
+          tickmode: "array",
+          tickvals: [0, 25, 50, 75, 100],
+          ticktext: ["0%", "25%", "50%", "75%", "100%"],
           gridcolor: "rgba(31,42,58,0.12)",
           zeroline: true,
           zerolinecolor: "rgba(31,42,58,0.14)",
         },
         yaxis2: {
           title: "Percent (%)",
-          ticksuffix: "%",
           domain: stackedCombo ? [0.1, 0.42] : [0, 1],
-          range: [0, 60],
+          range: [0, 100],
+          tickmode: "array",
+          tickvals: [0, 25, 50, 75, 100],
+          ticktext: ["0%", "25%", "50%", "75%", "100%"],
           gridcolor: "rgba(31,42,58,0.12)",
           zeroline: true,
           zerolinecolor: "rgba(31,42,58,0.14)",
@@ -668,9 +652,9 @@ function renderRepresentationChart(chartKey) {
       {
         ...baseLayout,
         title: { text: "" },
-        margin: { t: 82, r: 34, b: 108, l: 74 },
+        margin: { t: 82, r: 34, b: 142, l: 74 },
         xaxis: {
-          title: { text: "Budget quartile", standoff: 18 },
+          title: { text: "Budget quartile", standoff: 26 },
           tickangle: 0,
           automargin: true,
         },
@@ -729,7 +713,7 @@ function renderRepresentationChart(chartKey) {
         automargin: true,
       },
       yaxis: {
-        title: "Share of movies (%)",
+        title: "Mean top-5 female cast share (%)",
         ticksuffix: "%",
         range: [0, 100],
         gridcolor: "rgba(31,42,58,0.12)",
@@ -1231,6 +1215,21 @@ document.querySelectorAll(".success-chart-button").forEach((button) => {
     renderSuccessChart(button.dataset.successChart);
   });
 });
+
+const hypothesisSwitcher = document.querySelector(".hypothesis-switcher");
+if (hypothesisSwitcher) {
+  hypothesisSwitcher.addEventListener("click", (event) => {
+    const button = event.target.closest(".hypothesis-button");
+    if (!button) return;
+
+    document.querySelectorAll(".hypothesis-button").forEach((item) => item.classList.remove("is-active"));
+    document.querySelectorAll(".hypothesis-card").forEach((panel) => panel.classList.remove("is-active"));
+    button.classList.add("is-active");
+    document
+      .querySelector(`[data-hypothesis-panel="${button.dataset.hypothesis}"]`)
+      ?.classList.add("is-active");
+  });
+}
 
 document.querySelectorAll(".ml-outcome-button").forEach((button) => {
   button.addEventListener("click", () => {

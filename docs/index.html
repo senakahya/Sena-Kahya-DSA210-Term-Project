@@ -13,7 +13,7 @@
         <h1>Women in Movies</h1>
         <p class="subtitle">Representation and Success</p>
         <p class="student-name">Sena Kahya</p>
-        <p class="course-info">DSA Introduction to Data Science Spring 2025-2026</p>
+        <p class="course-info">DSA 210 - Introduction to Data Science</p>
       </div>
     </header>
 
@@ -23,6 +23,7 @@
       <a href="#data">Data</a>
       <a href="#representation">Representation</a>
       <a href="#success">Success</a>
+      <a href="#hypothesis">Hypothesis</a>
       <a href="#modeling">Modeling</a>
       <a href="#conclusion">Conclusion</a>
     </nav>
@@ -48,9 +49,9 @@
           <p class="section-label">Data Sources</p>
           <h2>What data I used</h2>
           <p>
-            I used The Movies Dataset as the main source for movie metadata, genres, release years,
-            budgets, revenues, cast and crew information, popularity, TMDB ratings, MovieLens
-            ratings, and external IDs.
+            I used Kaggle datasets as the source for the analysis. The Movies Dataset is the main
+            source for movie metadata, genres, release years, budgets, revenues, cast and crew
+            information, popularity, TMDB ratings, MovieLens ratings, and external IDs.
           </p>
           <p>
             I then merged this movie data with IMDb/Bechdel information to add IMDb ratings,
@@ -63,10 +64,10 @@
       <section id="representation" class="section section-representation reveal">
         <div class="content">
           <p class="section-label">Representation Analysis</p>
-          <h2>On-screen and behind-the-camera representation</h2>
+          <h2>Representation in Movies</h2>
           <p class="representation-lede">
-            This section first shows how female presence is distributed on screen, then connects
-            that pattern to creative control, genre, and production scale.
+            Female representation is measured through cast visibility, director presence, and
+            behind-the-camera roles.
           </p>
 
           <div class="insight-grid" aria-label="Representation key insights">
@@ -79,8 +80,12 @@
               <p>Movies with a female director</p>
             </article>
             <article class="insight-card">
-              <span>+26.9 pts</span>
-              <p>Female lead gap when director is female</p>
+              <span>47.1% / 20.2%</span>
+              <p>Female lead share<br />with female director / without female director</p>
+            </article>
+            <article class="insight-card">
+              <span>12.5%</span>
+              <p>Average female share across recorded crew roles</p>
             </article>
           </div>
 
@@ -103,7 +108,6 @@
             </div>
             <div id="representation-plot" class="plotly-chart"></div>
             <div class="chart-takeaway">
-              <span>Takeaway</span>
               <p id="representation-chart-takeaway">
                 Top-billed casts are often far from gender-balanced; the median movie has about one-third women among the top five cast members.
               </p>
@@ -187,11 +191,347 @@
             </div>
             <div id="success-regression-plot" class="plotly-chart success-regression-plot"></div>
             <div class="chart-takeaway">
-              <span>Takeaway</span>
               <p id="success-chart-takeaway">
                 Cast representation is compared with rating, engagement, and financial outcomes separately.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="hypothesis" class="section section-hypothesis reveal">
+        <div class="content">
+          <p class="section-label">Hypothesis Testing</p>
+          <h2>Testing representation and success outcomes</h2>
+          <p class="hypothesis-lede">
+            The hypothesis tests check whether the descriptive patterns remain visible in the data
+            when ratings, audience engagement, and financial outcomes are tested separately.
+          </p>
+
+          <div class="hypothesis-switcher" aria-label="Hypothesis result selector">
+            <button class="hypothesis-button is-active" type="button" data-hypothesis="director">Director gender</button>
+            <button class="hypothesis-button" type="button" data-hypothesis="cast">Top-5 cast share</button>
+            <button class="hypothesis-button" type="button" data-hypothesis="crew">Female crew ratio</button>
+          </div>
+
+          <div class="hypothesis-grid" aria-label="Hypothesis testing result summaries">
+            <article class="hypothesis-card is-active" data-hypothesis-panel="director">
+              <div class="hypothesis-card-header">
+                <span>H1</span>
+                <h3>Director gender</h3>
+              </div>
+              <p>
+                Movies with a female director differ from other movies, but the direction changes
+                by outcome. This supports the main project idea that success should not be treated
+                as one combined score.
+              </p>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Outcome</th>
+                      <th>n female</th>
+                      <th>n non-female</th>
+                      <th>Female mean</th>
+                      <th>Non-female mean</th>
+                      <th>Difference</th>
+                      <th>Welch p</th>
+                      <th>M-W p</th>
+                      <th>Result</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>TMDB rating</td>
+                      <td>1,844</td>
+                      <td>43,502</td>
+                      <td>5.772</td>
+                      <td>5.618</td>
+                      <td>+0.154</td>
+                      <td>0.0002</td>
+                      <td>0.0274</td>
+                      <td>Significant</td>
+                    </tr>
+                    <tr>
+                      <td>IMDb rating</td>
+                      <td>508</td>
+                      <td>7,201</td>
+                      <td>6.447</td>
+                      <td>6.653</td>
+                      <td>-0.206</td>
+                      <td>&lt;0.001</td>
+                      <td>&lt;0.001</td>
+                      <td>Significant</td>
+                    </tr>
+                    <tr>
+                      <td>MovieLens rating</td>
+                      <td>1,837</td>
+                      <td>42,789</td>
+                      <td>3.133</td>
+                      <td>3.057</td>
+                      <td>+0.076</td>
+                      <td>&lt;0.001</td>
+                      <td>0.0004</td>
+                      <td>Significant</td>
+                    </tr>
+                    <tr>
+                      <td>Log popularity</td>
+                      <td>1,844</td>
+                      <td>43,502</td>
+                      <td>1.065</td>
+                      <td>0.977</td>
+                      <td>+0.088</td>
+                      <td>&lt;0.001</td>
+                      <td>&lt;0.001</td>
+                      <td>Significant</td>
+                    </tr>
+                    <tr>
+                      <td>Log TMDB votes</td>
+                      <td>1,844</td>
+                      <td>43,502</td>
+                      <td>2.810</td>
+                      <td>2.651</td>
+                      <td>+0.159</td>
+                      <td>0.0001</td>
+                      <td>&lt;0.001</td>
+                      <td>Significant</td>
+                    </tr>
+                    <tr>
+                      <td>Log IMDb votes</td>
+                      <td>508</td>
+                      <td>7,201</td>
+                      <td>9.601</td>
+                      <td>10.249</td>
+                      <td>-0.648</td>
+                      <td>&lt;0.001</td>
+                      <td>&lt;0.001</td>
+                      <td>Significant</td>
+                    </tr>
+                    <tr>
+                      <td>Log revenue</td>
+                      <td>231</td>
+                      <td>5,144</td>
+                      <td>16.184</td>
+                      <td>16.768</td>
+                      <td>-0.584</td>
+                      <td>0.0029</td>
+                      <td>0.0004</td>
+                      <td>Significant</td>
+                    </tr>
+                    <tr>
+                      <td>Profit</td>
+                      <td>231</td>
+                      <td>5,144</td>
+                      <td>51.541</td>
+                      <td>59.632</td>
+                      <td>-8.091</td>
+                      <td>0.3728</td>
+                      <td>0.0089</td>
+                      <td>Not significant</td>
+                    </tr>
+                    <tr>
+                      <td>ROI</td>
+                      <td>231</td>
+                      <td>5,144</td>
+                      <td>3.390</td>
+                      <td>5,822.182</td>
+                      <td>-5,818.793</td>
+                      <td>0.0599</td>
+                      <td>0.0066</td>
+                      <td>Not significant</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+
+            <article class="hypothesis-card" data-hypothesis-panel="cast">
+              <div class="hypothesis-card-header">
+                <span>H2</span>
+                <h3>Top-5 female cast share</h3>
+              </div>
+              <p>
+                On-screen representation is statistically related to several success measures, but
+                the relationships are small. The strongest pattern is not a simple positive success
+                effect.
+              </p>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Outcome</th>
+                      <th>n</th>
+                      <th>Spearman rho</th>
+                      <th>p-value</th>
+                      <th>Result</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>TMDB rating</td>
+                      <td>39,677</td>
+                      <td>-0.0595</td>
+                      <td>&lt;0.001</td>
+                      <td>Significant</td>
+                    </tr>
+                    <tr>
+                      <td>IMDb rating</td>
+                      <td>7,565</td>
+                      <td>-0.1287</td>
+                      <td>&lt;0.001</td>
+                      <td>Significant</td>
+                    </tr>
+                    <tr>
+                      <td>MovieLens rating</td>
+                      <td>39,049</td>
+                      <td>-0.0393</td>
+                      <td>&lt;0.001</td>
+                      <td>Significant</td>
+                    </tr>
+                    <tr>
+                      <td>Log popularity</td>
+                      <td>39,677</td>
+                      <td>+0.0224</td>
+                      <td>&lt;0.001</td>
+                      <td>Significant</td>
+                    </tr>
+                    <tr>
+                      <td>Log TMDB votes</td>
+                      <td>39,677</td>
+                      <td>+0.0061</td>
+                      <td>0.2255</td>
+                      <td>Not significant</td>
+                    </tr>
+                    <tr>
+                      <td>Log IMDb votes</td>
+                      <td>7,565</td>
+                      <td>-0.1943</td>
+                      <td>&lt;0.001</td>
+                      <td>Significant</td>
+                    </tr>
+                    <tr>
+                      <td>Log revenue</td>
+                      <td>5,320</td>
+                      <td>-0.0572</td>
+                      <td>&lt;0.001</td>
+                      <td>Significant</td>
+                    </tr>
+                    <tr>
+                      <td>Profit</td>
+                      <td>5,320</td>
+                      <td>-0.0284</td>
+                      <td>0.0386</td>
+                      <td>Significant</td>
+                    </tr>
+                    <tr>
+                      <td>ROI</td>
+                      <td>5,320</td>
+                      <td>-0.0080</td>
+                      <td>0.5617</td>
+                      <td>Not significant</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+
+            <article class="hypothesis-card" data-hypothesis-panel="crew">
+              <div class="hypothesis-card-header">
+                <span>H3</span>
+                <h3>Female crew ratio</h3>
+              </div>
+              <p>
+                Crew representation shows the clearest success-related pattern. It is weak for
+                ratings, but more consistently positive for audience engagement and revenue.
+              </p>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Outcome</th>
+                      <th>n</th>
+                      <th>Spearman rho</th>
+                      <th>p-value</th>
+                      <th>Result</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>TMDB rating</td>
+                      <td>35,512</td>
+                      <td>+0.0245</td>
+                      <td>&lt;0.001</td>
+                      <td>Significant</td>
+                    </tr>
+                    <tr>
+                      <td>IMDb rating</td>
+                      <td>7,291</td>
+                      <td>-0.0920</td>
+                      <td>&lt;0.001</td>
+                      <td>Significant</td>
+                    </tr>
+                    <tr>
+                      <td>MovieLens rating</td>
+                      <td>34,933</td>
+                      <td>+0.0307</td>
+                      <td>&lt;0.001</td>
+                      <td>Significant</td>
+                    </tr>
+                    <tr>
+                      <td>Log popularity</td>
+                      <td>35,512</td>
+                      <td>+0.2957</td>
+                      <td>&lt;0.001</td>
+                      <td>Significant</td>
+                    </tr>
+                    <tr>
+                      <td>Log TMDB votes</td>
+                      <td>35,512</td>
+                      <td>+0.2883</td>
+                      <td>&lt;0.001</td>
+                      <td>Significant</td>
+                    </tr>
+                    <tr>
+                      <td>Log IMDb votes</td>
+                      <td>7,291</td>
+                      <td>+0.2355</td>
+                      <td>&lt;0.001</td>
+                      <td>Significant</td>
+                    </tr>
+                    <tr>
+                      <td>Log revenue</td>
+                      <td>5,220</td>
+                      <td>+0.1767</td>
+                      <td>&lt;0.001</td>
+                      <td>Significant</td>
+                    </tr>
+                    <tr>
+                      <td>Profit</td>
+                      <td>5,220</td>
+                      <td>+0.0968</td>
+                      <td>&lt;0.001</td>
+                      <td>Significant</td>
+                    </tr>
+                    <tr>
+                      <td>ROI</td>
+                      <td>5,220</td>
+                      <td>-0.0166</td>
+                      <td>0.2311</td>
+                      <td>Not significant</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+          </div>
+
+          <div class="hypothesis-summary">
+            <p>
+              The formal tests support the same interpretation as the visual analysis: female
+              representation is related to movie outcomes, but the relationship depends on the
+              outcome type. Rating results are weaker and less consistent, while engagement and
+              selected financial outcomes show clearer links, especially for crew representation.
+            </p>
           </div>
         </div>
       </section>
@@ -272,9 +612,8 @@
 
           <div class="ml-findings" aria-label="Machine learning interpretation summary">
             <p>
-             <p>
               The key question is whether representation-related feature groups provide additional predictive value beyond the controls-only baseline, and whether these effects remain consistent across different outcome measures.
-              </p>
+            </p>
               <ul>
                 <li>
                   <strong>Rating:</strong>
@@ -306,39 +645,46 @@
           <p class="section-label">Conclusion</p>
           <h2>Final interpretation</h2>
           <p class="conclusion-lede">
-            The project asked whether women's representation in movies is connected to different
-            forms of movie success. The answer is nuanced: representation matters, but not in the
-            same way for every outcome.
+            This project asked whether female representation in movies is associated with movie
+            success, while treating success as three separate outcomes: ratings, audience
+            engagement, and financial performance. The results show that female representation is
+            connected to movie outcomes, but the answer depends on which type of success is being
+            measured.
           </p>
           <div class="conclusion-summary">
             <ul>
               <li>
-                <strong>Representation is still uneven.</strong>
-                Women remain less visible in key creative roles, and many movies stay below balanced
-                top-cast representation.
+                <strong>Movies with female directors do differ from other movies.</strong>
+                They tend to have stronger female representation in central cast, lead roles, and
+                crew composition. However, their success outcomes are mixed, so director gender does
+                not point to one single success advantage or disadvantage.
               </li>
               <li>
-                <strong>Behind-the-camera presence matters.</strong>
-                Movies with female directors show stronger on-screen female visibility, suggesting
-                that creative leadership and cast representation are connected.
+                <strong>Female cast representation is related to success, but weakly.</strong>
+                Top-5 female cast share is statistically associated with several outcomes, but the
+                relationships are small and not consistently positive. It describes on-screen
+                balance well, but it is not the strongest success signal.
               </li>
               <li>
-                <strong>Success is multidimensional.</strong>
-                Ratings, engagement, and financial outcomes do not move in one single direction, so
-                representation should not be framed as a simple "success booster."
+                <strong>Female crew representation gives the clearest success pattern.</strong>
+                Female crew ratio is more consistently connected to audience engagement and selected
+                financial outcomes than to ratings. This suggests that behind-the-camera
+                representation is especially relevant for visibility and market performance.
               </li>
               <li>
-                <strong>Prediction results are selective.</strong>
-                Representation variables do not improve high IMDb rating prediction, but they add
-                useful signal for popularity and profitability when cast, crew, and Bechdel features
-                are combined.
+                <strong>Representation improves prediction selectively.</strong>
+                Adding representation variables does not improve high IMDb rating prediction, but
+                the full cast, crew, and Bechdel feature set improves prediction for high popularity
+                and profitability. Representation therefore adds value mainly for engagement and
+                financial success, not for rating success.
               </li>
             </ul>
           </div>
           <p class="conclusion-closing">
-            Overall, the findings show that gender representation is an important part of how movies
-            are structured and received, but its relationship with success depends on which outcome is
-            being measured.
+            Overall, the results show that female representation matters, but not in the same way
+            for every measure of success. Ratings are mixed, engagement shows clearer links, and
+            financial performance becomes easier to predict when representation features are
+            included.
           </p>
         </div>
       </section>

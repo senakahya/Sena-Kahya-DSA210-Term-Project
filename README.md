@@ -1,5 +1,10 @@
 # Women in Movies: Representation and Success
 
+## Project Website
+
+View the interactive project website here:  
+https://senakahya.github.io/Sena-Kahya-DSA210-Term-Project/
+
 ## Project Overview
 
 In this project, I analyze how women are represented in movies and investigate whether female representation is related to movie success. The film industry plays an important role in shaping public perception, and representation in movies can influence how audiences view gender roles. For this reason, I focus on understanding how women appear in films and whether gender representation is associated with different success metrics.

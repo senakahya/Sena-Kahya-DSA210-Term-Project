@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Women in Movies: Representation and Success</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header id="home" class="hero">
+      <div class="hero-inner">
+        <p class="eyebrow">DSA 210 Project Presentation</p>
+        <h1>Women in Movies</h1>
+        <p class="subtitle">Representation and Success</p>
+        <p class="student-name">Sena Kahya</p>
+        <p class="course-info">DSA Introduction to Data Science Spring 2025-2026</p>
+      </div>
+    </header>
+
+    <nav class="navbar" aria-label="Main navigation">
+      <a href="#home">Home</a>
+      <a href="#objective">Objective</a>
+      <a href="#data">Data</a>
+      <a href="#representation">Representation</a>
+      <a href="#success">Success</a>
+      <a href="#modeling">Modeling</a>
+      <a href="#conclusion">Conclusion</a>
+    </nav>
+
+    <main>
+      <section id="objective" class="section section-objective reveal">
+        <div class="content">
+          <p class="section-label">Project Objective</p>
+          <h2>What the project asks</h2>
+          <p>
+            This project explores how women are represented in movies and whether that
+            representation is associated with different measures of movie success.
+          </p>
+          <p>
+            The analysis focuses on female presence in cast and creative crew roles, then compares
+            these patterns with ratings, audience engagement, and financial outcomes.
+          </p>
+        </div>
+      </section>
+
+      <section id="data" class="section section-data reveal">
+        <div class="content">
+          <p class="section-label">Data Sources</p>
+          <h2>What data I used</h2>
+          <p>
+            I used The Movies Dataset as the main source for movie metadata, genres, release years,
+            budgets, revenues, cast and crew information, popularity, TMDB ratings, MovieLens
+            ratings, and external IDs.
+          </p>
+          <p>
+            I then merged this movie data with IMDb/Bechdel information to add IMDb ratings,
+            vote counts, Bechdel ratings, and Bechdel pass status. I also merged Oscar award data
+            by movie title and year to include nomination and win indicators.
+          </p>
+        </div>
+      </section>
+
+      <section id="representation" class="section section-representation reveal">
+        <div class="content">
+          <p class="section-label">Representation Analysis</p>
+          <h2>On-screen and behind-the-camera representation</h2>
+          <p class="representation-lede">
+            This section first shows how female presence is distributed on screen, then connects
+            that pattern to creative control, genre, and production scale.
+          </p>
+
+          <div class="insight-grid" aria-label="Representation key insights">
+            <article class="insight-card">
+              <span>33.3%</span>
+              <p>Median top-5 female cast share</p>
+            </article>
+            <article class="insight-card">
+              <span>4.1%</span>
+              <p>Movies with a female director</p>
+            </article>
+            <article class="insight-card">
+              <span>+26.9 pts</span>
+              <p>Female lead gap when director is female</p>
+            </article>
+          </div>
+
+          <div class="chart-switcher" aria-label="Representation chart selector">
+            <button class="chart-button is-active" type="button" data-chart="distribution">Cast distribution</button>
+            <button class="chart-button" type="button" data-chart="roles">Roles & director impact</button>
+            <button class="chart-button" type="button" data-chart="genres">Genres</button>
+            <button class="chart-button" type="button" data-chart="budget">Budget context</button>
+          </div>
+
+          <div class="interactive-chart" aria-live="polite">
+            <div class="chart-header">
+              <div>
+                <h3 id="representation-chart-title">Most movies have limited female representation in the top cast</h3>
+                <p id="representation-chart-note">
+                  Distribution of the female share among the top-5 billed cast members. The median is 33.3%.
+                </p>
+              </div>
+              <span id="representation-chart-badge">Distribution</span>
+            </div>
+            <div id="representation-plot" class="plotly-chart"></div>
+            <div class="chart-takeaway">
+              <span>Takeaway</span>
+              <p id="representation-chart-takeaway">
+                Top-billed casts are often far from gender-balanced; the median movie has about one-third women among the top five cast members.
+              </p>
+            </div>
+          </div>
+
+          <p>
+            The graphs move from on-screen visibility to creative roles and context, so the
+            representation story is read as a sequence instead of isolated charts.
+          </p>
+        </div>
+      </section>
+
+      <section id="success" class="section section-success reveal">
+        <div class="content">
+          <p class="section-label">Success Metrics</p>
+          <h2>Ratings, engagement, and financial outcomes</h2>
+          <p class="success-lede">
+            This project evaluates movie success through ratings, engagement, and financial
+            outcomes separately instead of combining them into one score.
+          </p>
+
+          <div class="success-grid" aria-label="Success metric families">
+            <article class="success-card">
+              <span>01</span>
+              <h3>Ratings</h3>
+              <p>
+                IMDb rating is used to compare perceived movie quality.
+              </p>
+              <ul>
+                <li>IMDb average rating</li>
+              </ul>
+            </article>
+            <article class="success-card">
+              <span>02</span>
+              <h3>Engagement</h3>
+              <p>
+                IMDb vote volume is log-transformed to capture audience engagement.
+              </p>
+              <ul>
+                <li>Log IMDb number of votes</li>
+              </ul>
+            </article>
+            <article class="success-card">
+              <span>03</span>
+              <h3>Financial Outcomes</h3>
+              <p>
+                Revenue is analyzed only when valid financial data are available.
+              </p>
+              <ul>
+                <li>Log revenue</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="success-chart-switcher" aria-label="Success metric chart selector">
+            <button class="success-chart-button is-active" type="button" data-success-chart="cast">Cast</button>
+            <button class="success-chart-button" type="button" data-success-chart="director">Director Impact</button>
+            <button class="success-chart-button" type="button" data-success-chart="crew">Crew</button>
+          </div>
+
+          <div class="interactive-chart success-chart-panel" aria-live="polite">
+            <div class="chart-header">
+              <div>
+                <h3 id="success-chart-title">Success outcomes by top-5 female cast share</h3>
+                <p id="success-chart-note">
+                  Movies are grouped by the female share among the top-5 billed cast members.
+                </p>
+              </div>
+              <span id="success-chart-badge">Cast</span>
+            </div>
+            <div id="success-plot" class="plotly-chart"></div>
+            <div class="success-regression-header">
+              <div>
+                <h4 id="success-regression-title">Movie-level regression trends by top-5 female cast share</h4>
+                <p id="success-regression-note">
+                  Dots are movie-level observations from the full available data; lines are fitted regression trends.
+                </p>
+              </div>
+              <span>Regression lines</span>
+            </div>
+            <div id="success-regression-plot" class="plotly-chart success-regression-plot"></div>
+            <div class="chart-takeaway">
+              <span>Takeaway</span>
+              <p id="success-chart-takeaway">
+                Cast representation is compared with rating, engagement, and financial outcomes separately.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="modeling" class="section section-modeling reveal">
+        <div class="content">
+          <p class="section-label">Machine Learning</p>
+          <h3>Can representation variables improve prediction?</h3>
+          <p class="modeling-lede">
+            Machine learning is used as a comparative evaluation method. The models are first trained using standard movie metadata, and representation-related variables are then incorporated to examine whether they improve predictive performance, measured through ROC-AUC scores.
+          </p>
+
+          <div class="ml-reading-panel" aria-label="Machine learning reading guide">
+            <div class="ml-reading-copy">
+              
+              <p>
+                The models first use standard movie metadata. Then cast, crew, and Bechdel
+                representation features are added to test whether prediction improves.
+              </p>
+            </div>
+            <div class="ml-feature-flow" aria-label="Machine learning feature groups">
+              <div>
+                <strong>Controls only</strong>
+                <p>year, budget, runtime, genre, language, country</p>
+              </div>
+              <div>
+                <strong>+ cast</strong>
+                <p>on-screen representation</p>
+              </div>
+              <div>
+                <strong>+ crew</strong>
+                <p>behind-the-camera representation</p>
+              </div>
+              <div>
+                <strong>+ Bechdel</strong>
+                <p>full representation set</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="ml-outcome-switcher" aria-label="Machine learning outcome selector">
+            <button class="ml-outcome-button is-active" type="button" data-ml-outcome="rating">Rating</button>
+            <button class="ml-outcome-button" type="button" data-ml-outcome="engagement">Engagement</button>
+            <button class="ml-outcome-button" type="button" data-ml-outcome="financial">Financial Outcomes</button>
+          </div>
+
+          <div class="interactive-chart ml-chart-panel" aria-label="Machine learning feature group comparison chart">
+            <div class="chart-header">
+              <div>
+                <h3 id="ml-chart-title">High IMDb rating prediction</h3>
+                <p>
+                  <span id="ml-chart-note">For rating, the controls-only model performs best.</span>
+                </p>
+              </div>
+              <span id="ml-chart-badge" class="ml-chart-badge"></span>
+            </div>
+            <div id="ml-outcome-plot" class="plotly-chart ml-plot"></div>
+            <div class="ml-result-box">
+              
+              <p id="ml-result-text">
+                Controls only performs best for high IMDb rating prediction.
+              </p>
+            </div>
+          </div>
+
+          <div class="interactive-chart ml-chart-panel ml-added-panel" aria-label="Cast and crew added predictive value chart">
+            <div class="chart-header">
+              <div>
+                <h3>Cast vs crew added predictive value</h3>
+                <p>
+                  This chart compares how much each representation feature set changes ROC-AUC
+                  compared with the controls-only baseline.
+                </p>
+              </div>
+            </div>
+            <div id="ml-added-value-plot" class="plotly-chart ml-added-plot"></div>
+          </div>
+
+          <div class="ml-findings" aria-label="Machine learning interpretation summary">
+            <p>
+             <p>
+              The key question is whether representation-related feature groups provide additional predictive value beyond the controls-only baseline, and whether these effects remain consistent across different outcome measures.
+              </p>
+              <ul>
+                <li>
+                  <strong>Rating:</strong>
+                  Representation variables provide little to no improvement in predicting high IMDb ratings beyond the baseline controls.
+                </li>
+
+                <li>
+                  <strong>Engagement:</strong>
+                  Representation-related variables substantially improve popularity prediction, especially when cast, crew, and Bechdel features are combined.
+                </li>
+
+                <li>
+                  <strong>Financial outcomes:</strong>
+                  The strongest predictive improvement appears in profitability prediction, where the full representation feature set achieves the largest ROC-AUC gain.
+                </li>
+
+                <li>
+                  <strong>Overall:</strong>
+                  Representation variables contribute meaningful predictive value for engagement and financial outcomes, but they are not consistently effective across all measures of movie success.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="conclusion" class="section section-conclusion reveal">
+        <div class="content">
+          <p class="section-label">Conclusion</p>
+          <h2>Final interpretation</h2>
+          <p class="conclusion-lede">
+            The project asked whether women's representation in movies is connected to different
+            forms of movie success. The answer is nuanced: representation matters, but not in the
+            same way for every outcome.
+          </p>
+          <div class="conclusion-summary">
+            <ul>
+              <li>
+                <strong>Representation is still uneven.</strong>
+                Women remain less visible in key creative roles, and many movies stay below balanced
+                top-cast representation.
+              </li>
+              <li>
+                <strong>Behind-the-camera presence matters.</strong>
+                Movies with female directors show stronger on-screen female visibility, suggesting
+                that creative leadership and cast representation are connected.
+              </li>
+              <li>
+                <strong>Success is multidimensional.</strong>
+                Ratings, engagement, and financial outcomes do not move in one single direction, so
+                representation should not be framed as a simple "success booster."
+              </li>
+              <li>
+                <strong>Prediction results are selective.</strong>
+                Representation variables do not improve high IMDb rating prediction, but they add
+                useful signal for popularity and profitability when cast, crew, and Bechdel features
+                are combined.
+              </li>
+            </ul>
+          </div>
+          <p class="conclusion-closing">
+            Overall, the findings show that gender representation is an important part of how movies
+            are structured and received, but its relationship with success depends on which outcome is
+            being measured.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Women in Movies: Representation and Success | DSA 210</p>
+    </footer>
+
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+    <script src="regression-data.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
